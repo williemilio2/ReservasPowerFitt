@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Citas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Reserva tu Cita</h1>
+            <p>Plan Nutricional y de Entrenamiento</p>
+        </header>
+
+        <div class="pasos-container">
+            <div class="pasos">
+                <div class="paso active" id="paso-1">1</div>
+                <div class="linea"></div>
+                <div class="paso" id="paso-2">2</div>
+                <div class="linea"></div>
+                <div class="paso" id="paso-3">3</div>
+            </div>
+            <div class="pasos-texto">
+                <div class="paso-texto active">Información</div>
+                <div class="paso-texto">Fecha y Hora</div>
+                <div class="paso-texto">Confirmación</div>
+            </div>
+        </div>
+
+        <!-- Formulario de Información -->
+        <div class="seccion" id="seccion-1">
+            <form id="formulario-info">
+                <div class="campo">
+                    <label for="nombre">Nombre Completo</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="campo">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="campo">
+                    <label for="comentarios">Comentarios (Opcional)</label>
+                    <textarea id="comentarios" name="comentarios" rows="3" placeholder="Cuéntanos sobre tus objetivos o cualquier información relevante (Opcional)"></textarea>
+                </div>
+
+                <div class="botones">
+                    <button type="submit" class="boton boton-primario">Continuar</button>
+                </div>
+                <p id="mensajeError" style="color: red;"></p>
+            </form>
+        </div>
+
+        <!-- Selección de Fecha y Hora -->
+        <div class="seccion oculto" id="seccion-2">
+            <div class="calendario-container">
+                <div class="calendario-header">
+                    <button id="mes-anterior">&lt;</button>
+                    <h2 id="mes-actual">Mayo 2025</h2>
+                    <button id="mes-siguiente">&gt;</button>
+                </div>
+                <div class="dias-semana">
+                    <div>Lun</div>
+                    <div>Mar</div>
+                    <div>Mié</div>
+                    <div>Jue</div>
+                    <div>Vie</div>
+                    <div>Sáb</div>
+                    <div>Dom</div>
+                </div>
+                <div class="calendario-dias" id="calendario-dias">
+                    <!-- Los días se generarán con JavaScript -->
+                </div>
+            </div>
+
+            <div class="horas-container">
+                <h3>Selecciona una hora</h3>
+                
+                <div class="horario-grupo">
+                    <h4>Mañana</h4>
+                    <div class="horas">
+                        <div class="hora" data-hora="10:30">10:30</div>
+                        <div class="hora" data-hora="10:50">10:50</div>
+                        <div class="hora" data-hora="11:10">11:10</div>
+                        <div class="hora" data-hora="11:30">11:30</div>
+                        <div class="hora" data-hora="11:50">11:50</div>
+                        <div class="hora" data-hora="12:10">12:10</div>
+                        <div class="hora" data-hora="12:30">12:30</div>
+                        <div class="hora" data-hora="12:50">12:50</div>
+                        <div class="hora" data-hora="13:10">13:10</div>
+                        <div class="hora" data-hora="13:30">13:30</div>
+                        <div class="hora" data-hora="13:50">13:50</div>
+                    </div>
+                </div>
+                
+                <div class="horario-grupo">
+                    <h4>Tarde</h4>
+                    <div class="horas">
+                        <div class="hora" data-hora="17:30">17:30</div>
+                        <div class="hora" data-hora="17:50">17:50</div>
+                        <div class="hora" data-hora="18:10">18:10</div>
+                        <div class="hora" data-hora="18:30">18:30</div>
+                        <div class="hora" data-hora="18:50">18:50</div>
+                        <div class="hora" data-hora="19:10">19:10</div>
+                        <div class="hora" data-hora="19:30">19:30</div>
+                        <div class="hora" data-hora="19:50">19:50</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="boton boton-secundario" id="volver-paso1">Atrás</button>
+                <button class="boton boton-primario" id="continuar-paso3">Continuar</button>
+            </div>
+        </div>
+
+        <!-- Confirmación -->
+        <div class="seccion oculto" id="seccion-3">
+            <div class="resumen">
+                <h3>Resumen de tu Reserva</h3>
+                <div class="resumen-item">
+                    <div class="resumen-etiqueta">Nombre:</div>
+                    <div class="resumen-valor" id="resumen-nombre"></div>
+                </div>
+                <div class="resumen-item">
+                    <div class="resumen-etiqueta">Email:</div>
+                    <div class="resumen-valor" id="resumen-email"></div>
+                </div>
+                <div class="resumen-item">
+                    <div class="resumen-etiqueta">Fecha:</div>
+                    <div class="resumen-valor" id="resumen-fecha"></div>
+                </div>
+                <div class="resumen-item">
+                    <div class="resumen-etiqueta">Hora:</div>
+                    <div class="resumen-valor" id="resumen-hora"></div>
+                </div>
+                <div class="resumen-item" id="resumen-comentarios-container">
+                    <div class="resumen-etiqueta">Comentarios:</div>
+                    <div class="resumen-valor" id="resumen-comentarios"></div>
+                </div>
+            </div>
+
+            <div class="alerta">
+                <p><strong>Importante:</strong> Por favor llega 10 minutos antes de tu cita. Si necesitas cancelar, hazlo con al menos 24 horas de anticipación.</p>
+            </div>
+
+            <div class="botones">
+                <button class="boton boton-secundario" id="volver-paso2">Atrás</button>
+                <button class="boton boton-primario" id="confirmar-reserva">Confirmar Reserva</button>
+            </div>
+        </div>
+
+        <!-- Confirmación Exitosa -->
+        <div class="seccion oculto" id="seccion-exito">
+            <div class="exito-container">
+                <div class="icono-exito">✓</div>
+                <h2>¡Reserva Confirmada!</h2>
+                <p>Tu cita ha sido programada exitosamente. Hemos enviado un correo electrónico con los detalles de tu reserva.</p>
+                
+                <div class="resumen-exito">
+                    <h3>Detalles de la Reserva</h3>
+                    <div class="resumen-item">
+                        <div class="resumen-etiqueta">Servicio:</div>
+                        <div class="resumen-valor">Plan Nutricional y de Entrenamiento</div>
+                    </div>
+                    <div class="resumen-item">
+                        <div class="resumen-etiqueta">Fecha:</div>
+                        <div class="resumen-valor" id="exito-fecha"></div>
+                    </div>
+                    <div class="resumen-item">
+                        <div class="resumen-etiqueta">Hora:</div>
+                        <div class="resumen-valor" id="exito-hora"></div>
+                    </div>
+                </div>
+                
+                <button class="boton boton-primario" id="nueva-reserva">Volver al inicio</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/cogerNombreyCorreo.js"></script>
+</body>
+</html>

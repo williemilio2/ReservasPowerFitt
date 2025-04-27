@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin...</title>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="dropdown-modal" id="dropdownModal">
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha">
+        
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora">
+
+        <button id="enviarBtn">Aceptar</button>
+    </div>
+    <div class="containerAdmin">
+        <div class="card">
+            <div class="card-header">
+                <div class="header-content">
+                    <div>
+                        <h1 class="card-title">Citas pendientes</h1>
+                        <p class="card-description">Gestiona tus próximas citas</p>
+                    </div>
+                    <div class="badge">0 citas activas</div>
+                </div>
+            </div>
+            <div class="contentAdmin">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="40px"></th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Mensaje</th>
+                            <th class="text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaAdmin">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+</html>
