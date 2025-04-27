@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('email').value = correoUsuario;
       }
     } catch (err) {
-      console.error('Error al obtener el correo:');
+      console.error('Error al obtener el correo:' + err);
+      console.error('Error al obtener el correo2:', err.stack);
     }
 });
