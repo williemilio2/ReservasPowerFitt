@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-      const res = await fetch('http://localhost:3000/usuario', {
+      const res = await fetch('https://powerfitt.onrender.com/usuario', {
         method: 'GET',
         credentials: 'include' // Importante para enviar la cookie
       });

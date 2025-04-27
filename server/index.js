@@ -188,7 +188,7 @@ function esManana(fechaBaseStr, fechaCompararStr, demasDatos) {
     fechaCompararStr.getDate() === manana.getDate()
   ) {
     async function enviarMail() {
-      await fetch('http://localhost:3000/enviar-correo', {
+      await fetch('https://powerfitt.onrender.com/enviar-correo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

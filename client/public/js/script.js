@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if(callback['confirmacion']){
                 try {
                     //Creo la cookie
-                    const response = await fetch('http://localhost:3000/guardar-cookie', {
+                    const response = await fetch('https://powerfitt.onrender.com/guardar-cookie', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       credentials: 'include',  // Esto asegura que las cookies se envíen entre dominios
