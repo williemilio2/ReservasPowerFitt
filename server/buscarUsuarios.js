@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename)
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 const TOKEN_TURSO = process.env.TOKEN_TURSO;
 const client = createClient({
-  url: 'libsql://picked-doctor-spectrum-williemilio.aws-eu-west-1.turso.io',
+  url: 'libsql://powerfit-emilio-trabjos.aws-eu-west-1.turso.io',
   authToken: TOKEN_TURSO,
 })
 

@@ -11,6 +11,7 @@ import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import cron from 'node-cron';
 import { createEmailTemplate, generateEmailContent }from "./plantillaMail.js"
+import { Socket } from 'dgram'
 
 // Definir la tarea programada a las 9 AM todos los días
 cron.schedule('0 9 * * *', async () => {
@@ -29,7 +30,7 @@ const TOKEN_TURSO = process.env.TOKEN_TURSO;
 const NODEMAILER_PASSWD = process.env.NODEMAILER_PASSWD;
 
 const client = createClient({
-  url: 'libsql://picked-doctor-spectrum-williemilio.aws-eu-west-1.turso.io',
+  url: 'libsql://powerfit-emilio-trabjos.aws-eu-west-1.turso.io',
   authToken: TOKEN_TURSO,
 })
 async function probarConexion() {
@@ -46,13 +47,13 @@ async function enviarCorreo(destinatario, asunto, mensaje, isHtml = false) {
   let transporter = nodemailer.createTransport({
     service: 'Gmail', // o el que uses
     auth: {
-      user: 'willymarta@gmail.com',
+      user: 'powerfittinformes@gmail.com',
       pass: NODEMAILER_PASSWD
     }
   });
 
   let info = await transporter.sendMail({
-    from: '"Tu App" <emilio.gonzalezcanovas@gmail.com>',
+    from: '"Aplicacion reservas" <powerfittinformes@gmail.com>',
     to: destinatario,
     subject: asunto,
     text: mensaje,
@@ -151,7 +152,7 @@ app.post('/admin', (req, res) => {
     res.cookie('accesoAdmin', 'true', {
       httpOnly: true,
       sameSite: 'Lax',
-      maxAge: 604800 // 1 semana
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 1 semana
     });
     return res.redirect('/admin/dashboard');
   } else {
@@ -309,6 +310,13 @@ io.on('connection', (socket) => {
       } else {
           callback({ success: false });
       }
+    })
+    socket.on('revisarFechas', async(dia, callback) => {
+      const response = await client.execute(
+        'SELECT Hora FROM reservas WHERE Fecha = ?',
+        [dia] // aquí van los valores de los parámetros
+      );
+      callback(response.rows)
     })
 })
 //Configuro el cors para q pueda controlar el server de react tambien (Lo de arriba tambien es cinfigurar cors)

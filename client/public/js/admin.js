@@ -1,5 +1,35 @@
 const socket = io();
-const tabla = document.getElementById('tablaAdmin');
+
+
+const listaHoras = [
+    "10:30", "10:50", "11:10", "11:30", "11:50",
+    "12:10", "12:30", "12:50", "13:10", "13:30", "13:50",
+    "17:30", "17:50", "18:10", "18:30", "18:50",
+    "19:10", "19:30", "19:50"
+  ]
+
+function horasDisponibles(dia, horas) {
+    horas.innerHTML = "";
+    let horasDeEseDia
+    console.log('PRIMERO 1')
+    console.log(dia.value)
+    console.log(convertirFecha(dia.value))
+    dia = convertirFecha(dia.value)
+    socket.emit('revisarFechas', dia, (callback) => {
+        horasDeEseDia = callback
+        
+        listaHoras.forEach(hora => {
+            const option = document.createElement('option');
+            option.value = hora;
+            option.textContent = hora;
+            console.log(horasDeEseDia)
+            if(horasDeEseDia.some(obj => obj.Hora === option.value)){
+                option.disabled = true
+            }
+            horas.appendChild(option);
+        });
+    })
+}
 
 function convertirFecha(fecha) {
     // Usamos expresión regular para separar por / o -
@@ -13,8 +43,10 @@ function convertirFecha(fecha) {
     return `${año}/${mes}/${diaFormateado}`;
 }
 function enviarDatosCambiarFecha(fecha, hora, id, nombre, email){
+    console.log('LUEGO 1')
+    console.log('fecha' + fecha)
     fechaFinal = convertirFecha(fecha)
-    
+    console.log('fechaFinal' + fechaFinal)
     socket.emit('cambiarFecha', { consulta: 'UPDATE reservas SET Fecha = ?, Hora = ? WHERE id = ?', args: [fechaFinal, hora, id] }, (response) => {
         if (!response.success) {
             alert('Error al cambiar la fecha, intentalo otra vez o contacta contacta con nuestro equipo');
@@ -42,6 +74,7 @@ function enviarDatosCambiarFecha(fecha, hora, id, nombre, email){
 
 // Cuando se carga el DOM
 document.addEventListener('DOMContentLoaded', function() {
+    const tabla = document.getElementById('tablaAdmin');
     // Envia el cogerDatos, con el callback que le da TODOS los campos de la base de datos
     socket.emit('cogerDatos', (datos) => {
         
@@ -135,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const estaVacio = comentarioTexto.trim() === '';
             
             // Si el comentario es corto o vacío, mostrar texto simple
-            if (estaVacio || comentarioTexto.length < 50) {
+            if (estaVacio || comentarioTexto.length < 5) {
                 const comentarioSpan = document.createElement('span');
                 comentarioSpan.className = estaVacio ? 'text-muted' : '';
                 comentarioSpan.textContent = estaVacio ? 'Sin mensaje' : comentarioTexto;
@@ -144,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Para comentarios largos, usar un div con texto truncado y botón expandir
                 const comentarioPreview = document.createElement('div');
                 comentarioPreview.className = 'comentario-preview';
-                comentarioPreview.textContent = comentarioTexto.substring(0, 50) + '...';
+                comentarioPreview.textContent = comentarioTexto.substring(0, 5) + '...';
                 
                 const expandirBtn = document.createElement('button');
                 expandirBtn.className = 'expandir-btn';
@@ -281,6 +314,20 @@ document.addEventListener('DOMContentLoaded', function() {
             tdCambiarFechaButton.classList.add("botonFecha");
             //Onclik de cambiar fecha
             tdCambiarFechaButton.addEventListener('click', () => {
+                const fechaComprobar = document.getElementById('fecha');
+                const select = document.getElementById('hora')
+                select.disabled = true;
+
+                fechaComprobar.addEventListener('input', () => {
+                  // Se habilita solo si hay una fecha completa (formato YYYY-MM-DD)
+                  if (fechaComprobar.value.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                    select.disabled = false;
+                    horasDisponibles(fechaComprobar, select)
+
+                  } else {
+                    select.disabled = true;
+                  }
+                })
                 const modal = document.getElementById('dropdownModal');
                 const overlay = document.getElementById('overlay');
                 modal.style.display = 'block';
