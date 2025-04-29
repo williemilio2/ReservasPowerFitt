@@ -316,7 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
             tdCambiarFechaButton.addEventListener('click', () => {
                 const fechaComprobar = document.getElementById('fecha');
                 const select = document.getElementById('hora')
-                select.disabled = true;
 
                 fechaComprobar.addEventListener('input', () => {
                   // Se habilita solo si hay una fecha completa (formato YYYY-MM-DD)
