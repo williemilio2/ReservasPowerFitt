@@ -155,8 +155,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
         
         socket.emit('mensaje', datosReserva, (callback) => {
+            console.log(callback)
         })
-        async function botonClick() {
+        async function enviarCorreoUser() {
             await fetch('/enviar-correo', {
               method: 'POST',
               headers: {
@@ -164,8 +165,18 @@ document.addEventListener('DOMContentLoaded', function() {
               },
               body: JSON.stringify({ email: datosReserva.email, nombre: datosReserva.nombre, fecha: datosReserva.fecha, hora: datosReserva.hora, tipoDeEnvio: "reserva" })
             });
-          }
-        botonClick()
+        }
+        enviarCorreoUser()
+        async function enviarCorreoAdmin() {
+            await fetch('/enviar-correo', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ email: datosReserva.email, nombre: datosReserva.nombre, fecha: datosReserva.fecha, hora: datosReserva.hora, tipoDeEnvio: "mailAdmin" })
+            });
+        }
+        enviarCorreoAdmin()
     });
     
     nuevaReserva.addEventListener('click', function() {

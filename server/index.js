@@ -14,7 +14,7 @@ import { createEmailTemplate, generateEmailContent }from "./plantillaMail.js"
 import { Socket } from 'dgram'
 
 // Definir la tarea programada a las 9 AM todos los días
-cron.schedule('0 9 * * *', async () => {
+cron.schedule('0 7 * * *', async () => {
   
   // Llamar a tu función sacarFechas
   await sacarFechas();
@@ -108,6 +108,19 @@ app.post("/enviar-correo", async (req, res) => {
 
       userName = req.body.nombre
       userEmail = req.body.email
+    } else if (req.body.tipoDeEnvio == "mailAdmin") {
+      fecha = new Date(req.body.fecha)
+      fechaFormateada = fecha.toLocaleDateString("es-ES")
+      fechaFormateada = req.body.fecha
+      console.log('ESTOY ACAA')
+      emailContent = generateEmailContent("mailAdmin", {
+        fechaFormateada,
+        hora: req.body.hora,
+        userName: req.body.nombre
+      })
+
+      userName = req.body.nombre
+      userEmail = 'willymarta@gmail.com'
     }
 
     // Create the complete HTML email

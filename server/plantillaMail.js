@@ -64,6 +64,9 @@ switch (type) {
 
     case "recuerdo":
     return `Te recordamos que mañana tienes una cita programada para el <strong>${data.fechaFormateada}</strong> a las <strong>${data.hora}</strong>. ¡Te esperamos!`
+    
+    case "mailAdmin":
+    return `Hola! El cliente <strong>${data.userName}</strong> a reservado una cita el dia <strong>${data.fechaFormateada}</strong> a las <strong>${data.hora}</strong>.`
 
     default:
     return `Gracias por contactarnos. Estamos a tu disposición para cualquier consulta.`
