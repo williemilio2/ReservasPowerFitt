@@ -120,7 +120,7 @@ app.post("/enviar-correo", async (req, res) => {
       })
 
       userName = req.body.nombre
-      userEmail = 'willymarta@gmail.com'
+      userEmail = 'rafa.capal@gmail.com'
     }
 
     // Create the complete HTML email
